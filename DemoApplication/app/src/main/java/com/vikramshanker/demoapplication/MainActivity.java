@@ -2,11 +2,10 @@ package com.vikramshanker.demoapplication;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -14,7 +13,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String STR_SUB = "-";
     private static final String STR_MUL = "*";
     private static final String STR_DIV = "/";
-    private static final String STR_EQU = "=";
 
     private Button buttonZero;
     private Button buttonOne;
@@ -35,20 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mResult;
 
     /* Expression information */
-    private boolean newNumber = true;
-    private long mPreviousValue;
-    private Operator mLastOp = Operator.EQU;
-    private long mCurrentValue;
-
-    private enum Operator {
-        ADD, SUB, MUL, DIV, EQU
-    }
+    private CalculatorLogic mCalc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mCalc = new CalculatorLogic();
         findViews();
         setListeners();
     }
@@ -93,25 +84,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateDisplay() {
-        mResult.setText(Long.toString(mCurrentValue));
+        mResult.setText(mCalc.getDisplay());
     }
 
     private void clearValue() {
-        mPreviousValue = 0;
-        mCurrentValue = 0;
+        mCalc.reset();
         updateDisplay();
     }
 
-    private void addDigitToResult(View v) {
-        mCurrentValue = (newNumber) ? 0 : mCurrentValue;
+    private void digitPressed(View v) {
         Button buttonView = (Button) v;
         String newDigitString = (String) buttonView.getText();
         int newDigit = Integer.parseInt(newDigitString);
-        long newValue = 10 * mCurrentValue + newDigit;
-        // update current values and view
-        mCurrentValue = newValue;
+        mCalc.buttonPressed(newDigit);
         updateDisplay();
-        newNumber = false;
     }
 
     private Operator getOperatorFromView(View v) {
@@ -132,36 +118,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void applyOperatorToExpression(View v) {
-        String errMsg = "Can't divide by 0!";
         Operator op = getOperatorFromView(v);
-        // only store previous value for same numbers
-        if (!newNumber) {
-            // case on previous operator to update current value
-            switch (mLastOp) {
-                case ADD:
-                    mCurrentValue += mPreviousValue;
-                    break;
-                case SUB:
-                    mCurrentValue = mPreviousValue - mCurrentValue;
-                    break;
-                case MUL:
-                    mCurrentValue *= mPreviousValue;
-                    break;
-                case DIV:
-                    // division by 0 error
-                    if (mCurrentValue == 0) {
-                        Toast.makeText(this, errMsg, Toast.LENGTH_SHORT).show();
-                    } else {
-                        mCurrentValue = mPreviousValue / mCurrentValue;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            mPreviousValue = mCurrentValue;
-            newNumber = true;
-        }
-        mLastOp = op;
+        mCalc.buttonPressed(op);
         updateDisplay();
     }
 
@@ -178,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_7:
             case R.id.button_8:
             case R.id.button_9:
-                addDigitToResult(v);
+                digitPressed(v);
                 break;
             case R.id.button_clear:
                 clearValue();
@@ -193,5 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+        Log.e("Calculator", mCalc.toString());
     }
 }

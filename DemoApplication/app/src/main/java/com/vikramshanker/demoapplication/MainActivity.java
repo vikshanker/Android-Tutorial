@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonClear;
     private TextView mResult;
 
-    /* Expression information */
+    // Handles logic
     private CalculatorLogic mCalc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCalc = new CalculatorLogic();
+        mCalc = new CalculatorLogicImpl();
         findViews();
         setListeners();
     }
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void applyOperatorToExpression(View v) {
+    private void operatorPressed(View v) {
         Operator op = getOperatorFromView(v);
         mCalc.buttonPressed(op);
         updateDisplay();
@@ -146,11 +146,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button_mul:
             case R.id.button_div:
             case R.id.button_equals:
-                applyOperatorToExpression(v);
+                operatorPressed(v);
                 break;
             default:
                 break;
         }
-        Log.e("Calculator", mCalc.toString());
     }
 }

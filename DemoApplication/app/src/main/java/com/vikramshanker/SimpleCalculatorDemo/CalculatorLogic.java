@@ -1,4 +1,4 @@
-package com.vikramshanker.demoapplication;
+package com.vikramshanker.SimpleCalculatorDemo;
 
 /**
  * Created by Vikram on 11/7/16.

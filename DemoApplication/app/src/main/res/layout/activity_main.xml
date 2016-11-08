@@ -15,7 +15,7 @@
         android:layout_marginBottom="40dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/default_answer"
+        android:text="@string/ready_text"
         android:textSize="42sp"/>
     <!-- Group the buttons together in a nested layout -->
     <RelativeLayout

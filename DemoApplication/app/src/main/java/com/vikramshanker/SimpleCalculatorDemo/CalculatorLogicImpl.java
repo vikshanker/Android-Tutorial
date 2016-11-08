@@ -1,6 +1,6 @@
-package com.vikramshanker.demoapplication;
+package com.vikramshanker.SimpleCalculatorDemo;
 
-import static com.vikramshanker.demoapplication.Operator.NONE;
+import static com.vikramshanker.SimpleCalculatorDemo.Operator.NONE;
 
 /**
  * Created by Vikram on 11/7/16.
@@ -86,8 +86,10 @@ public class CalculatorLogicImpl implements CalculatorLogic{
     public String getDisplay() {
         if (result != null) {
             return Integer.toString(result);
-        } else if (mRight != null) {
-            return Integer.toString(mRight);
+        } else if (mLeft != null && op != NONE && mRight != null) {
+            return Integer.toString(mLeft) + op.toString() + Integer.toString(mRight);
+        } else if (mLeft != null && op != NONE) {
+            return Integer.toString(mLeft) + op.toString();
         } else if (mLeft != null) {
             return Integer.toString(mLeft);
         }

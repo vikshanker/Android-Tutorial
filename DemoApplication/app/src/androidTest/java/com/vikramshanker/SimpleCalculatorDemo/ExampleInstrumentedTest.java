@@ -1,4 +1,4 @@
-package com.vikramshanker.demoapplication;
+package com.vikramshanker.SimpleCalculatorDemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

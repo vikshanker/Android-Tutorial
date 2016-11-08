@@ -1,4 +1,4 @@
-package com.vikramshanker.demoapplication;
+package com.vikramshanker.SimpleCalculatorDemo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

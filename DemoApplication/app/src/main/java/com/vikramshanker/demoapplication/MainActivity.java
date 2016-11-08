@@ -9,11 +9,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // This is the text associated with button operations
     private static final String STR_ADD = "+";
     private static final String STR_SUB = "-";
     private static final String STR_MUL = "*";
     private static final String STR_DIV = "/";
 
+    // Debugging tag
+    private static final String TAG = "CalcDemo";
+
+    // Hold on to instances of all views
     private Button buttonZero;
     private Button buttonOne;
     private Button buttonTwo;
@@ -32,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonClear;
     private TextView mResult;
 
-    // Handles logic
+    // Delegate logic to a regular Java class.
+    // This is better practice than embedding the logic in the activity
     private CalculatorLogic mCalc;
 
     @Override
@@ -41,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         mCalc = new CalculatorLogicImpl();
         findViews();
+        // Make sure we set which function should be called when a button is pressed!
+        // Why can we use this instead of the function name?
         setListeners();
     }
 
@@ -83,15 +91,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonClear.setOnClickListener(this);
     }
 
+    // Use this method to update what the calculator screen should read.
+    // Notice that again the activity is just a bridge between the logic and the screen.
     private void updateDisplay() {
         mResult.setText(mCalc.getDisplay());
     }
 
+    // Handle clear button presses
     private void clearValue() {
         mCalc.reset();
         updateDisplay();
     }
 
+    // Handle number button presses
     private void digitPressed(View v) {
         Button buttonView = (Button) v;
         String newDigitString = (String) buttonView.getText();
@@ -100,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateDisplay();
     }
 
+    // Get the operator type when an operator is pressed
     private Operator getOperatorFromView(View v) {
         Button buttonView = (Button) v;
         String buttonText = (String) buttonView.getText();
@@ -117,14 +130,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+
+    // Handle operator button presses
     private void operatorPressed(View v) {
         Operator op = getOperatorFromView(v);
         mCalc.buttonPressed(op);
         updateDisplay();
     }
 
+    // on-click listeners
     @Override
     public void onClick(View v) {
+        // Notice how to leverage fall-through
         switch (v.getId()) {
             case R.id.button_0:
             case R.id.button_1:
@@ -151,5 +168,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 break;
         }
+        // Debuging text (remember not to use System.out.println!)
+        Log.d(TAG, mCalc.toString());
     }
 }

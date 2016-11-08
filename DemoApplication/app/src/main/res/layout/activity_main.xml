@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- Use a relative layout so we can specify the relation of views in relation to each other -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+    <!-- Calculator Screen -->
     <TextView
         android:id="@+id/answer_text"
         android:layout_width="wrap_content"
@@ -15,7 +17,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/default_answer"
         android:textSize="42sp"/>
-
+    <!-- Group the buttons together in a nested layout -->
     <RelativeLayout
         android:id="@+id/button_layout"
         android:layout_width="wrap_content"
@@ -25,7 +27,8 @@
         android:layout_marginTop="16dp">
 
         <!-- TOP ROW -->
-
+        <!-- for this button and all others, in order to better support all screen sizes, we
+             shouldn't hard code the size of every button -->
         <Button
             android:id="@+id/button_7"
             android:layout_width="84dp"

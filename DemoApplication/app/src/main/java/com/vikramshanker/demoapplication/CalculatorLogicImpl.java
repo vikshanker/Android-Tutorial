@@ -98,8 +98,8 @@ public class CalculatorLogicImpl implements CalculatorLogic{
     public String toString() {
         return "CalculatorLogic{" +
                 "mLeft=" + mLeft +
-                ", mRight=" + mRight +
                 ", op=" + op +
+                ", mRight=" + mRight +
                 ", result=" + result +
                 '}';
     }

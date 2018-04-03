@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mCalc = new CalculatorLogicImpl();
+        mCalc = new CalculatorLogic();
         findViews();
         // Make sure we set which function should be called when a button is pressed!
         // Why can we use this instead of the function name?

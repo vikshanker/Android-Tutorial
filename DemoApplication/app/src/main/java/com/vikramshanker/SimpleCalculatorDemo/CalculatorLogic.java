@@ -1,7 +1,5 @@
 package com.vikramshanker.SimpleCalculatorDemo;
 
-import static com.vikramshanker.SimpleCalculatorDemo.Operator.NONE;
-
 /**
  * Created by Vikram on 11/7/16.
  */
@@ -16,14 +14,14 @@ public class CalculatorLogic {
     public CalculatorLogic() {
         mLeft = null;
         mRight = null;
-        mOp = NONE;
+        mOp = Operator.NONE;
         mResult = null;
     }
 
     public void reset() {
         mLeft = null;
         mRight = null;
-        mOp = NONE;
+        mOp = Operator.NONE;
         mResult = null;
     }
 
@@ -45,7 +43,7 @@ public class CalculatorLogic {
         if (mResult != null) {
             reset();
         }
-        if (mOp == NONE) {
+        if (mOp == Operator.NONE) {
             if (mLeft == null) {
                 mLeft = i;
             } else {
@@ -61,7 +59,7 @@ public class CalculatorLogic {
     }
 
     public Integer evaluate() {
-        if (mLeft == null || mRight == null || mOp == NONE) {
+        if (mLeft == null || mRight == null || mOp == Operator.NONE) {
             reset();
             return null;
         }
@@ -86,9 +84,9 @@ public class CalculatorLogic {
     public String getDisplay() {
         if (mResult != null) {
             return Integer.toString(mResult);
-        } else if (mLeft != null && mOp != NONE && mRight != null) {
+        } else if (mLeft != null && mOp != Operator.NONE && mRight != null) {
             return Integer.toString(mLeft) + mOp.toString() + Integer.toString(mRight);
-        } else if (mLeft != null && mOp != NONE) {
+        } else if (mLeft != null && mOp != Operator.NONE) {
             return Integer.toString(mLeft) + mOp.toString();
         } else if (mLeft != null) {
             return Integer.toString(mLeft);
